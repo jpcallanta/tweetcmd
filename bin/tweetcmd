@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+# Main
+require 'tweetcmd'
+
+twitter = TweetCmd.new(
+  ENV['TWITTER_CONSUMER_KEY'],
+  ENV['TWITTER_CONSUMER_KEY_SECRET'],
+  ENV['TWITTER_ACCESS_TOKEN'],
+  ENV['TWITTER_ACCESS_TOKEN_SECRET'],
+  ENV['TWITTER_USER']
+)
+
+if ARGV.length >= 1
+  case ARGV[0]
+  when 'home-timeline'
+    twitter.stream_home(120)
+  when 'user-timeline'
+    twitter.stream_user(ARGV[1], 120)
+  else
+    puts 'Command not found!'.colorize(:red)
+    exit 1
+  end
+else
+  twitter.show_usage
+  exit 0
+end
